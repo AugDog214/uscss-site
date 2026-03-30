@@ -52,6 +52,7 @@
     <a href="index.html">BROADCAST</a>
     <a href="clients.html">CLIENTS</a>
     <a href="personal.html" class="active">PERSONAL</a>
+    <a href="about.html">ABOUT</a>
     <a href="contact.html">TRANSMIT</a>
   </nav>
 
@@ -79,7 +80,14 @@
         <div class="case-title"></div>
         <button class="case-close" onclick="closeCaseFile()">[X] TERMINATE FILE</button>
       </div>
-      <div class="case-image"><img src="" alt="" /></div>
+      <div class="case-image">
+        <img src="" alt="" />
+        <div class="case-img-controls">
+          <button class="case-img-btn" onclick="caseImgNav(-1)">[◄ PREV]</button>
+          <div class="case-img-counter"></div>
+          <button class="case-img-btn" onclick="caseImgNav(1)">[NEXT ►]</button>
+        </div>
+      </div>
       <div class="case-details"></div>
       <div class="case-description"></div>
     </div>
@@ -91,8 +99,8 @@
 
   <!-- Scripts -->
   <script src="lib/barba.min.js"></script>
-  <script src="js/shared.js?v=4"></script>
-  <script src="js/channel-sweep.js?v=4"></script>
+  <script src="js/shared.js?v=5"></script>
+  <script src="js/channel-sweep.js?v=5"></script>
 
 </body>
 </html>

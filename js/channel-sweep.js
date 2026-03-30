@@ -19,7 +19,8 @@
     index: 'CH 00',
     clients: 'CH 01',
     personal: 'CH 02',
-    contact: 'CH 03'
+    contact: 'CH 03',
+    about: 'CH 04'
   };
 
   /* ── Canvas Sweep Animation ── */
@@ -157,13 +158,14 @@
         (namespace === 'index' && href === 'index.html') ||
         (namespace === 'clients' && href === 'clients.html') ||
         (namespace === 'personal' && href === 'personal.html') ||
-        (namespace === 'contact' && href === 'contact.html');
+        (namespace === 'contact' && href === 'contact.html') ||
+        (namespace === 'about' && href === 'about.html');
       link.classList.toggle('active', isActive);
     });
 
     // Update HUD mode text
     const modeDisplay = document.getElementById('modeDisplay');
-    const channelNames = { clients: 'CHANNEL 01', personal: 'CHANNEL 02', contact: 'CHANNEL 03' };
+    const channelNames = { clients: 'CHANNEL 01', personal: 'CHANNEL 02', contact: 'CHANNEL 03', about: 'CHANNEL 04' };
     if (channelNames[namespace] && modeDisplay) {
       modeDisplay.textContent = channelNames[namespace];
     }
@@ -224,7 +226,8 @@
         (ns === 'index' && href === 'index.html') ||
         (ns === 'clients' && href === 'clients.html') ||
         (ns === 'personal' && href === 'personal.html') ||
-        (ns === 'contact' && href === 'contact.html')
+        (ns === 'contact' && href === 'contact.html') ||
+        (ns === 'about' && href === 'about.html')
       );
     });
   }

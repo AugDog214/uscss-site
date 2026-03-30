@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USCSS PORTFOLIO — PERSONNEL FILE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/shared.css" />
+</head>
+<body data-namespace="about" data-barba="wrapper">
+
+  <!-- Cursor -->
+  <div id="cursor"></div>
+
+  <!-- Three.js Canvas Host (hidden on this page) -->
+  <div id="three-canvas-host" class="hidden"></div>
+
+  <!-- VHS Filter -->
+  <div id="vhs-filter">
+    <div id="vhs-chroma"></div>
+    <div id="vhs-tracking"></div>
+    <div id="vhs-bleed"></div>
+  </div>
+  <div id="crt"></div>
+
+  <!-- HUD -->
+  <div class="hud tl">
+    <div class="mode" id="modeDisplay">CHANNEL 04</div>
+    <div>SYS: OPERATIONAL</div>
+    <div>PWR: █ NOMINAL</div>
+  </div>
+  <div class="hud tr">
+    <div>WEYLAND-YUTANI CORP</div>
+    <div>USCSS PORTFOLIO</div>
+    <div>ID: <span id="ts"></span></div>
+  </div>
+  <div class="hud bl">
+    <div>CURSOR: <span id="xy">X:0 Y:0</span></div>
+    <div>MODE: PERSONNEL ACCESS</div>
+  </div>
+
+  <!-- Channel HUD (transition overlay) -->
+  <div id="channel-hud"></div>
+
+  <!-- Channel Sweep Canvas -->
+  <canvas id="channel-sweep"></canvas>
+
+  <!-- Navigation -->
+  <nav class="page-nav">
+    <a href="index.html">BROADCAST</a>
+    <a href="clients.html">CLIENTS</a>
+    <a href="personal.html">PERSONAL</a>
+    <a href="about.html" class="active">ABOUT</a>
+    <a href="contact.html">TRANSMIT</a>
+  </nav>
+
+  <!-- Barba Container -->
+  <main data-barba="container" data-barba-namespace="about">
+    <div class="personnel-section">
+      <div class="channel-header">
+        <h1>PERSONNEL FILE</h1>
+        <div class="channel-id">CHANNEL 04 // OPERATOR DOSSIER</div>
+      </div>
+
+      <div class="personnel-grid">
+
+        <!-- Operator Profile -->
+        <div class="personnel-block">
+          <div class="block-label">// OPERATOR PROFILE</div>
+          <div class="personnel-name">AUGUST PIRRAGLIA</div>
+          <div class="personnel-title">GRAPHIC DESIGNER // MOTION ARTIST // 3D GENERALIST</div>
+          <div class="personnel-bio">
+            <p>Graphic designer and visual artist with experience in branding, print, motion graphics, and 3D design. Specializing in bold, high-concept work that blends analog warmth with digital precision.</p>
+            <p>Available for contracted missions in branding, advertising, motion design, and multimedia production.</p>
+          </div>
+        </div>
+
+        <!-- Capabilities -->
+        <div class="personnel-block">
+          <div class="block-label">// CAPABILITIES</div>
+          <div class="skills-grid">
+            <div class="skill-item"><span class="skill-dot">▪</span> Adobe Photoshop</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Adobe Illustrator</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Adobe InDesign</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Adobe Premiere Pro</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Adobe After Effects</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Blender 3D</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Print Production</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Brand Identity</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Motion Graphics</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> 3D Packaging</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Video Editing</div>
+            <div class="skill-item"><span class="skill-dot">▪</span> Social Media Design</div>
+          </div>
+        </div>
+
+        <!-- Resume -->
+        <div class="personnel-block personnel-resume">
+          <div class="block-label">// MISSION CLEARANCE DOCUMENT</div>
+          <div class="resume-desc">Full credentials, employment history, and qualifications on file.</div>
+          <a href="assets/resume.pdf" download class="resume-btn">[ DOWNLOAD DOSSIER / RESUME ]</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Dossier Pull Animation -->
+  <div id="dossier-pull">
+    <div class="dossier-terminal"></div>
+  </div>
+
+  <!-- Case File Overlay -->
+  <div id="case-file">
+    <div class="case-backdrop" onclick="closeCaseFile()"></div>
+    <div class="case-content">
+      <div class="case-header">
+        <div class="case-title"></div>
+        <button class="case-close" onclick="closeCaseFile()">[X] TERMINATE FILE</button>
+      </div>
+      <div class="case-image">
+        <img src="" alt="" />
+        <div class="case-img-controls">
+          <button class="case-img-btn" onclick="caseImgNav(-1)">[◄ PREV]</button>
+          <div class="case-img-counter"></div>
+          <button class="case-img-btn" onclick="caseImgNav(1)">[NEXT ►]</button>
+        </div>
+      </div>
+      <div class="case-details"></div>
+      <div class="case-description"></div>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="hum" src="uscss-sitesounds/alien ambience webiste.mp3" loop></audio>
+  <audio id="blip" src="uscss-sitesounds/Flick.mp3"></audio>
+
+  <!-- Scripts -->
+  <script src="lib/barba.min.js"></script>
+  <script src="js/shared.js?v=5"></script>
+  <script src="js/channel-sweep.js?v=5"></script>
+
+</body>
+</html>

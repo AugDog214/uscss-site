@@ -246,14 +246,41 @@ function runDossierPull(mission, onComplete) {
 }
 
 /* ── Case File Overlay ── */
+let _activeMission = null;
+let _activeImgIdx = 0;
+
+function _renderCaseImg(overlay) {
+  const img = overlay.querySelector('.case-image img');
+  const counter = overlay.querySelector('.case-img-counter');
+  img.src = _activeMission.images[_activeImgIdx];
+  img.alt = _activeMission.name;
+  if (counter) counter.textContent = `IMAGE ${_activeImgIdx + 1} / ${_activeMission.images.length}`;
+}
+
+function caseImgNav(dir) {
+  if (!_activeMission) return;
+  _activeImgIdx = (_activeImgIdx + dir + _activeMission.images.length) % _activeMission.images.length;
+  playBlip();
+  const overlay = document.getElementById('case-file');
+  if (overlay) _renderCaseImg(overlay);
+}
+
 function openCaseFile(mission) {
   const overlay = document.getElementById('case-file');
   if (!overlay) return;
 
-  // Populate case file data (hidden until dossier pull completes)
+  _activeMission = mission;
+  _activeImgIdx = 0;
+
+  // Gallery mode when multiple images
+  if (mission.images.length > 1) {
+    overlay.classList.add('has-gallery');
+  } else {
+    overlay.classList.remove('has-gallery');
+  }
+
   overlay.querySelector('.case-title').textContent = `MISSION FILE: ${mission.id} // ${mission.name.toUpperCase()}`;
-  overlay.querySelector('.case-image img').src = mission.images[0];
-  overlay.querySelector('.case-image img').alt = mission.name;
+  _renderCaseImg(overlay);
 
   const details = overlay.querySelector('.case-details');
   details.innerHTML = `
