@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USCSS PORTFOLIO — CONTRACTED MISSIONS</title>
+  <link rel="stylesheet" href="css/shared.css" />
+</head>
+<body data-namespace="clients" data-barba="wrapper">
+
+  <!-- Cursor -->
+  <div id="cursor"></div>
+
+  <!-- Three.js Canvas Host (hidden on this page) -->
+  <div id="three-canvas-host" class="hidden"></div>
+
+  <!-- VHS Video Overlay -->
+  <div id="vhs-video-overlay">
+    <video autoplay muted loop playsinline>
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-tv-noise-closeup-4490-large.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- VHS Filter -->
+  <div id="vhs-filter">
+    <div id="vhs-noise"></div>
+    <div id="vhs-chroma"></div>
+    <div id="vhs-tracking"></div>
+    <div id="vhs-bleed"></div>
+  </div>
+  <div id="crt"></div>
+
+  <!-- HUD -->
+  <div class="hud tl">
+    <div class="mode" id="modeDisplay">CHANNEL 01</div>
+    <div>SYS: OPERATIONAL</div>
+    <div>PWR: █ NOMINAL</div>
+  </div>
+  <div class="hud tr">
+    <div>WEYLAND-YUTANI CORP</div>
+    <div>USCSS PORTFOLIO</div>
+    <div>ID: <span id="ts"></span></div>
+  </div>
+  <div class="hud bl">
+    <div>CURSOR: <span id="xy">X:0 Y:0</span></div>
+    <div>MODE: ARCHIVE BROWSE</div>
+  </div>
+
+  <!-- Channel HUD (transition overlay) -->
+  <div id="channel-hud"></div>
+
+  <!-- Channel Sweep Canvas -->
+  <canvas id="channel-sweep"></canvas>
+
+  <!-- Navigation -->
+  <nav class="page-nav">
+    <a href="index.html">BROADCAST</a>
+    <a href="clients.html" class="active">CLIENTS</a>
+    <a href="personal.html">PERSONAL</a>
+    <a href="contact.html">TRANSMIT</a>
+  </nav>
+
+  <!-- Barba Container -->
+  <main data-barba="container" data-barba-namespace="clients">
+    <div class="mission-grid-wrapper">
+      <div class="channel-header">
+        <h1>CONTRACTED MISSIONS</h1>
+        <div class="channel-id">CHANNEL 01 // CLIENT WORK ARCHIVE</div>
+      </div>
+      <div class="mission-grid"></div>
+    </div>
+  </main>
+
+  <!-- Dossier Pull Animation -->
+  <div id="dossier-pull">
+    <div class="dossier-terminal"></div>
+  </div>
+
+  <!-- Case File Overlay -->
+  <div id="case-file">
+    <div class="case-backdrop" onclick="closeCaseFile()"></div>
+    <div class="case-content">
+      <div class="case-header">
+        <div class="case-title"></div>
+        <button class="case-close" onclick="closeCaseFile()">[X] TERMINATE FILE</button>
+      </div>
+      <div class="case-image"><img src="" alt="" /></div>
+      <div class="case-details"></div>
+      <div class="case-description"></div>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="hum" src="uscss-sitesounds/alien ambience webiste.mp3" loop></audio>
+  <audio id="blip" src="uscss-sitesounds/Flick.mp3"></audio>
+
+  <!-- Scripts -->
+  <script src="lib/barba.min.js"></script>
+  <script src="js/shared.js?v=3"></script>
+  <script src="js/channel-sweep.js?v=3"></script>
+
+</body>
+</html>
