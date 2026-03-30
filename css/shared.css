@@ -18,7 +18,7 @@ body {
   border: 2px solid #00ff41;
   box-shadow: 0 0 10px #00ff41, inset 0 0 10px #00ff41;
   pointer-events: none; z-index: 10000;
-  transition: transform 60ms linear;
+  will-change: transform;
 }
 
 /* ── VHS Filter Container ── */
@@ -37,24 +37,8 @@ body {
 }
 @keyframes scanlines { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
 
-/* Noise overlay */
-#vhs-noise {
-  position: absolute; inset: -50%; width: 200%; height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  animation: noise 0.2s steps(10) infinite;
-}
-@keyframes noise { 0% { transform: translate(0,0); } 100% { transform: translate(-10%,-10%); } }
-
-/* VHS Video Overlay */
-#vhs-video-overlay {
-  position: fixed; inset: 0; pointer-events: none;
-  z-index: 9997; overflow: hidden;
-}
-#vhs-video-overlay video {
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0.12; mix-blend-mode: overlay;
-}
+/* Noise overlay — REMOVED for performance */
+/* VHS Video Overlay — REMOVED for performance */
 
 /* Chromatic aberration */
 #vhs-chroma {
@@ -227,44 +211,44 @@ body {
 }
 
 .mission-card .thumb {
-  width: 100%; aspect-ratio: 16/9;
-  background: #0f1f0f;
+  width: 100%;
+  background: #0a0a0a;
   overflow: hidden;
   position: relative;
 }
 .mission-card .thumb img {
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; transition: opacity 0.5s ease;
+  width: 100%; display: block;
+  opacity: 0; transition: opacity 0.4s ease;
 }
 .mission-card .thumb img.loaded { opacity: 1; }
 .mission-card .thumb .placeholder {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 10px; letter-spacing: 2px; opacity: 0.3;
+  min-height: 180px;
 }
 
 .mission-card .info {
   padding: 14px 16px;
 }
-.mission-card .designation {
-  font-size: 11px; letter-spacing: 3px;
-  color: #00ff41; margin-bottom: 4px;
-  text-shadow: 0 0 3px #00ff41;
-}
 .mission-card .title {
-  font-size: 14px; letter-spacing: 1px;
-  color: #00ff41; margin-bottom: 8px;
-  text-shadow: 0 0 5px rgba(0,255,65,0.5);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #ffffff; margin-bottom: 4px;
 }
-.mission-card .status-line {
-  font-size: 10px; letter-spacing: 2px;
-  opacity: 0.5;
+.mission-card .type-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 1px;
+  color: #00ff41; opacity: 0.7;
+  text-transform: uppercase;
 }
-.mission-card .outcome {
-  font-size: 10px; letter-spacing: 2px;
-  color: #00ff41; margin-top: 6px;
-  text-shadow: 0 0 5px #00ff41;
-  opacity: 0.8;
+.mission-card .tools-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 400;
+  color: rgba(255,255,255,0.35);
+  margin-top: 6px; letter-spacing: 0.3px;
 }
 
 /* ═══════════════════════════════════════════════════

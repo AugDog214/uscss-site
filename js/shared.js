@@ -115,13 +115,17 @@ const MISSIONS = {
   ]
 };
 
-/* ── Cursor ── */
+/* ── Cursor (rAF for zero-lag) ── */
 const cursorEl = document.getElementById('cursor');
+let cursorX = 0, cursorY = 0, cursorRaf = false;
+function updateCursor() {
+  if (cursorEl) cursorEl.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
+  cursorRaf = false;
+}
 document.addEventListener('mousemove', (e) => {
-  if (cursorEl) {
-    cursorEl.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
-  }
-  // Update XY HUD if present
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  if (!cursorRaf) { cursorRaf = true; requestAnimationFrame(updateCursor); }
   const xyEl = document.getElementById('xy');
   if (xyEl) xyEl.textContent = `X:${e.clientX} Y:${e.clientY}`;
 });
@@ -180,14 +184,13 @@ function initMissionGrid(channel, container) {
     card.dataset.id = m.id;
     card.innerHTML = `
       <div class="thumb">
-        <div class="placeholder">LOADING ASSET...</div>
-        <img src="${m.thumb}" alt="${m.name}" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+        <div class="placeholder">LOADING...</div>
+        <img src="${m.thumb}" alt="${m.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
       </div>
       <div class="info">
-        <div class="designation">${m.id} // ${m.type}</div>
         <div class="title">${m.name}</div>
-        <div class="status-line">YEAR: ${m.year} // STATUS: COMPLETE</div>
-        <div class="outcome">${m.outcome}</div>
+        <div class="type-label">${m.type}</div>
+        <div class="tools-label">${m.tools.join(' / ')}</div>
       </div>
     `;
 
@@ -210,21 +213,14 @@ function runDossierPull(mission, onComplete) {
 
   const lines = [
     { text: '> USCSS MAINFRAME v4.2.1', delay: 0 },
-    { text: '> ESTABLISHING SECURE CONNECTION...', delay: 200 },
-    { text: '> CONNECTION ESTABLISHED', delay: 600 },
-    { text: '', delay: 700 },
-    { text: `> QUERY: MISSION FILE ${mission.id}`, delay: 900 },
-    { text: '> SEARCHING ARCHIVE...', delay: 1200 },
-    { text: `> MATCH FOUND: ${mission.name.toUpperCase()}`, delay: 1600 },
-    { text: `> CLASSIFICATION: ${mission.type}`, delay: 1800 },
-    { text: '', delay: 1900 },
-    { text: '> VERIFYING CLEARANCE LEVEL...', delay: 2000 },
-    { text: '> CLEARANCE: CONFIRMED', delay: 2400 },
-    { text: '> PULLING ASSET CACHE...', delay: 2600 },
-    { text: '> DECRYPTING FILE CONTENTS...', delay: 2900 },
-    { text: '', delay: 3100 },
-    { text: '> STATUS: READY', delay: 3200 },
-    { text: '> OPENING MISSION FILE...', delay: 3400 },
+    { text: '> SECURE CONNECTION... OK', delay: 80 },
+    { text: `> QUERY: ${mission.id} // ${mission.name.toUpperCase()}`, delay: 200 },
+    { text: '> SEARCHING ARCHIVE...', delay: 350 },
+    { text: `> MATCH: ${mission.type}`, delay: 500 },
+    { text: '> CLEARANCE: CONFIRMED', delay: 650 },
+    { text: '> PULLING ASSET CACHE...', delay: 800 },
+    { text: '> STATUS: READY', delay: 950 },
+    { text: '> OPENING FILE...', delay: 1050 },
   ];
 
   lines.forEach(({ text, delay }) => {
@@ -245,8 +241,8 @@ function runDossierPull(mission, onComplete) {
       dossier.classList.remove('active', 'fade-out');
       terminal.innerHTML = '';
       onComplete();
-    }, 300);
-  }, 3800);
+    }, 200);
+  }, 1250);
 }
 
 /* ── Case File Overlay ── */
@@ -325,19 +321,17 @@ function sendTransmission() {
 
   const lines = [
     { text: '> ENCODING TRANSMISSION...', delay: 0 },
-    { text: '> SIGNAL LOCKED', delay: 400 },
-    { text: '> COMPRESSING PAYLOAD...', delay: 800 },
-    { text: '> ROUTING THROUGH RELAY NETWORK...', delay: 1200 },
-    { text: '', delay: 1400 },
-    { text: '> TRANSMISSION SENT SUCCESSFULLY', delay: 1600 },
-    { text: '', delay: 1800 },
-    { text: `> MISSION FILE: ${txId}`, delay: 2000 },
-    { text: `> SENDER: ${name.toUpperCase()}`, delay: 2200 },
-    { text: `> SUBJECT: ${subject.toUpperCase()}`, delay: 2400 },
-    { text: `> RETURN FREQ: ${email}`, delay: 2600 },
-    { text: '', delay: 2800 },
-    { text: '> RECEIPT LOGGED. STANDBY FOR RESPONSE.', delay: 3000 },
-    { text: '> END TRANSMISSION', delay: 3400 },
+    { text: '> SIGNAL LOCKED', delay: 150 },
+    { text: '> ROUTING...', delay: 300 },
+    { text: '> TRANSMISSION SENT', delay: 500 },
+    { text: '', delay: 600 },
+    { text: `> FILE: ${txId}`, delay: 700 },
+    { text: `> SENDER: ${name.toUpperCase()}`, delay: 800 },
+    { text: `> SUBJECT: ${subject.toUpperCase()}`, delay: 900 },
+    { text: `> RETURN: ${email}`, delay: 1000 },
+    { text: '', delay: 1100 },
+    { text: '> RECEIPT LOGGED. STANDBY.', delay: 1200 },
+    { text: '> END TRANSMISSION', delay: 1400 },
   ];
 
   receipt.innerHTML = '';
@@ -358,5 +352,5 @@ function sendTransmission() {
   setTimeout(() => {
     const mailtoLink = `mailto:augustpirraglia@gmail.com?subject=${encodeURIComponent('[USCSS] ' + subject)}&body=${encodeURIComponent('From: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
     window.open(mailtoLink, '_blank');
-  }, 3600);
+  }, 1600);
 }
